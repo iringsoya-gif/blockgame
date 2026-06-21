@@ -8,7 +8,7 @@ import hashlib
 import json
 import random
 from datetime import datetime, timezone, date
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 from app.core.supabase import supabase
 from app.api.deps import get_current_user
