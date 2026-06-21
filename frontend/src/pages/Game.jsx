@@ -566,7 +566,6 @@ export default function Game() {
           onClose={() => setShowSaveLoad(null)}
         />
       )}
-      </div>
     </div>
   )
 }
