@@ -1,0 +1,31 @@
+# Render Blueprint — BlockQuest 백엔드 (FastAPI)
+# Render 대시보드: New + → Blueprint → 이 저장소 선택 → Apply
+# 시크릿(sync:false) 값은 대시보드에서 직접 입력하라고 물어봅니다.
+services:
+  - type: web
+    name: blockgame-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    region: singapore
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      # ── 시크릿: 대시보드에서 직접 입력 (블루프린트에 값 안 넣음) ──
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      # ── 공개/임시값 ──
+      - key: FRONTEND_URL
+        value: https://temporary.vercel.app
+      - key: DEBUG
+        value: "False"
