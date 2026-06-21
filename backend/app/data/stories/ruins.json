@@ -1,0 +1,81 @@
+{
+  "title": "폐허의 기억",
+  "world_setting": "전쟁으로 폐허가 된 도시. 전설의 '기억 결정'을 찾아 전사한 동료들의 마지막 기억을 되살리려 한다. 도시 곳곳에는 과거의 환영이 떠돌고, 전쟁의 흔적이 아직도 생생하다. 마법과 기계가 공존했던 문명의 잔재가 위험과 보물을 동시에 품고 있다.",
+  "opening": "폐허가 된 도시의 성문 앞에 섰다. 한때 화려했던 건물들은 반쯤 무너져 있고, 바람이 불 때마다 전장의 냄새가 난다. 동료들의 유품을 손에 쥐고, 기억 결정이 있다는 중앙 도서관을 향해 발걸음을 내딛는다.",
+  "tone": "mystery",
+  "key_npcs": [
+    {
+      "name": "유령 사서 에이바",
+      "role": "폐허가 된 도서관의 수호 유령, 기억 결정의 위치를 아는 유일한 존재",
+      "personality": "슬프고 고독하지만 지식에 대한 열정을 잃지 않음. 기억에 집착하는 경향이 있어 플레이어의 동료 이야기에 반응한다",
+      "dialogue_hints": [],
+      "relation_impact": "호감 2 이상이면 기억 결정 조각 하나를 미리 제공"
+    },
+    {
+      "name": "전쟁 기계 골리앗",
+      "role": "오작동하는 고대 전쟁 기계, 적으로도 아군으로도 될 수 있음",
+      "personality": "명령만 따르던 기계지만 오랜 시간 혼자 있으며 무언가를 '학습'한 것 같다",
+      "dialogue_hints": [],
+      "relation_impact": "대화를 통해 설득하면 최종전 보조 가능"
+    },
+    {
+      "name": "약탈자 집단 우두머리 코르",
+      "role": "폐허에서 살아남은 약탈자들의 리더, 기억 결정을 노리고 있음",
+      "personality": "거칠고 탐욕스럽지만 부하들을 위한다는 나름의 신념이 있다. 협상 가능",
+      "dialogue_hints": [],
+      "relation_impact": "협상 성공 시 전투 회피 가능, 실패 시 기습"
+    }
+  ],
+  "bosses": [
+    {
+      "id": "mid_boss_automaton",
+      "name": "오작동 자동기계",
+      "trigger_condition": "after_2_battles",
+      "difficulty": 3,
+      "initial_garbage": 1,
+      "hp": 6,
+      "phase_count": 2,
+      "skills": ["add_garbage", "mirror_board", "slow_player"],
+      "intro_text": "도서관 지하에서 거대한 기계가 깨어난다. 눈에서 빨간 빛이 뿜어져 나오고 관절이 삐걱거린다",
+      "field_events": ["narrow_board", "random_rotation"]
+    },
+    {
+      "id": "final_boss_memory",
+      "name": "왜곡된 기억",
+      "trigger_condition": "chapter_final",
+      "difficulty": 5,
+      "initial_garbage": 2,
+      "hp": 9,
+      "phase_count": 3,
+      "skills": ["add_garbage", "scramble_board", "block_skills", "mirror_board", "slow_player"],
+      "intro_text": "기억 결정에 도달했을 때, 수많은 죽은 자들의 기억이 뒤섞여 하나의 존재가 되어 나타난다. '기억'이 당신을 거부한다",
+      "field_events": ["darkness", "heavy_gravity", "scramble_board"]
+    }
+  ],
+  "endings": [
+    {
+      "id": "memory_ending",
+      "title": "기억의 해방",
+      "condition": { "type": "boss_defeated", "value": "final_boss_memory" },
+      "closing_text": "기억 결정이 빛을 발하며 동료들의 마지막 모습이 눈앞에 펼쳐진다. 그들이 웃으며 손을 흔든다. 이제 그들을 보내줄 수 있다. 눈물이 볼을 타고 흘러내리지만, 마음은 한결 가벼워진다."
+    },
+    {
+      "id": "bad_ending",
+      "title": "기억에 잠기다",
+      "condition": { "type": "stat_threshold", "value": "hp_zero" },
+      "closing_text": "기억의 무게를 이기지 못하고 쓰러진다. 의식이 흐려지며 폐허 속에서 동료들의 목소리가 들린다. '같이 쉬자'고. 당신도 이 폐허의 기억이 된다."
+    },
+    {
+      "id": "machine_ending",
+      "title": "기계와의 동행",
+      "condition": { "type": "choice", "value": "allied_with_goliat" },
+      "closing_text": "골리앗과 함께 기억 결정을 지키기로 결심한다. 폐허의 새로운 수호자가 된 당신과 기계는 도시의 기억을 보존하며 다음 세대가 올 때까지 기다린다."
+    }
+  ],
+  "forbidden_topics": [
+    "현실 세계 언급",
+    "다른 게임이나 미디어 직접 레퍼런스",
+    "19금 내용",
+    "전쟁을 미화하거나 폭력을 찬양하는 전개"
+  ]
+}

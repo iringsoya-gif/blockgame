@@ -1,0 +1,80 @@
+{
+  "title": "심연의 노래",
+  "world_setting": "지하 깊은 곳, 태초의 음악이 봉인된 '공명 결정'이 있다. 이 결정의 힘을 얻으면 세상의 모든 소리를 제어할 수 있다고 전해진다. 지하 도시의 음악가들은 이 힘을 두고 서로 다른 야망을 품고 있다. 음악이 마법의 원천인 이 세계에서 당신은 진정한 '공명자'가 될 수 있을까. 분위기는 신비롭고 아름다우면서도 위험하다.",
+  "opening": "지하로 내려가는 계단 앞에 서 있다. 멀리서 아름다운 선율이 들려오지만, 그 안에는 무언가 불길한 기운이 섞여 있다. 지하 도시 '에코'의 수문장이 당신의 방문 목적을 묻는다.",
+  "tone": "mystery",
+  "key_npcs": [
+    {
+      "name": "수석 음악사 리라",
+      "role": "지하 도시 에코의 지도자. 공명 결정을 지키는 수호자",
+      "personality": "우아하고 냉철하지만 음악에 대한 열정은 누구보다 뜨겁다. 플레이어의 의도를 끊임없이 시험한다",
+      "dialogue_hints": [],
+      "relation_impact": "호감 3 이상이면 최종전에 '공명의 선율' 버프 제공"
+    },
+    {
+      "name": "음악 도둑 판",
+      "role": "공명 결정을 노리는 음악 도둑. 겉으로는 적이지만 같은 목적을 가질 수 있다",
+      "personality": "자유분방하고 쾌활하다. 자신의 욕심에 솔직하며 협상을 즐긴다. 도움이 될 수도 있고 방해가 될 수도 있다",
+      "dialogue_hints": [],
+      "relation_impact": "협력 시 플래그 allied_with_thief 추가, 별도 전투 경로 열림"
+    },
+    {
+      "name": "공명 결정의 목소리",
+      "role": "결정에 깃든 고대 존재. 선택받은 자에게만 들린다",
+      "personality": "수수께끼 같고 철학적이다. 당신의 음악에 대한 이해도에 따라 반응이 달라진다",
+      "dialogue_hints": [],
+      "relation_impact": "진정한 공명자 플래그를 위해 올바른 대답이 필요"
+    }
+  ],
+  "bosses": [
+    {
+      "id": "mid_boss_discord",
+      "name": "불협화음",
+      "trigger_condition": "after_2_battles",
+      "difficulty": 3,
+      "initial_garbage": 1,
+      "hp": 6,
+      "phase_count": 2,
+      "skills": ["scramble_board", "mirror_board", "slow_player"],
+      "intro_text": "지하 도시 깊은 곳에서 왜곡된 음악이 형태를 갖추기 시작한다. '불협화음'이 당신의 리듬을 흐트러뜨리려 한다",
+      "field_events": ["random_rotation", "scramble_board"]
+    },
+    {
+      "id": "final_boss_resonance",
+      "name": "절대 공명",
+      "trigger_condition": "chapter_final",
+      "difficulty": 5,
+      "initial_garbage": 2,
+      "hp": 9,
+      "phase_count": 3,
+      "skills": ["scramble_board", "mirror_board", "block_skills", "slow_player", "add_garbage"],
+      "intro_text": "공명 결정에 도달하자 그 안에 잠들어 있던 태초의 음악이 깨어난다. 모든 것을 지배하는 절대적인 공명이 당신에게 도전장을 내민다",
+      "field_events": ["double_score", "random_rotation", "darkness"]
+    }
+  ],
+  "endings": [
+    {
+      "id": "harmony_ending",
+      "title": "완전한 화음",
+      "condition": { "type": "boss_defeated", "value": "final_boss_resonance" },
+      "closing_text": "절대 공명을 이겨낸 당신은 공명 결정과 하나가 된다. 세상의 모든 소리가 들려오고, 그것들이 하나의 완전한 화음을 이루는 것을 느낀다. 음악은 당신 안에서, 당신은 음악 안에서 영원히 살아간다."
+    },
+    {
+      "id": "bad_ending",
+      "title": "불협화음에 잠기다",
+      "condition": { "type": "stat_threshold", "value": "hp_zero" },
+      "closing_text": "불협화음이 당신의 의식을 잠식한다. 아름다웠던 멜로디가 노이즈로 변해가는 가운데 의식이 희미해진다. 지하 도시의 또 하나의 불협화음이 된다."
+    },
+    {
+      "id": "thief_ending",
+      "title": "자유로운 선율",
+      "condition": { "type": "choice", "value": "allied_with_thief" },
+      "closing_text": "판과 함께 공명 결정을 지하 도시 밖으로 가져나온다. 이제 음악은 어느 곳에도 얽매이지 않고 세상 어디서든 울려 퍼진다. 두 사람의 자유로운 선율이 바람을 타고 퍼져나간다."
+    }
+  ],
+  "forbidden_topics": [
+    "현실 세계 언급",
+    "다른 게임이나 미디어 직접 레퍼런스",
+    "19금 내용"
+  ]
+}

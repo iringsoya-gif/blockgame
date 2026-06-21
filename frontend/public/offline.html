@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>오프라인 — BlockQuest</title>
+  <style>
+    body {
+      margin: 0; padding: 0;
+      min-height: 100vh;
+      background: #07071a;
+      color: #e8e6ff;
+      font-family: 'JetBrains Mono', monospace;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 24px; text-align: center; padding: 24px;
+    }
+    h1 { font-size: 2.5rem; color: #7c5cfc; margin: 0; }
+    p  { color: #6060a0; font-size: 0.9rem; max-width: 360px; line-height: 1.6; }
+    button {
+      padding: 12px 32px; background: #7c5cfc; color: white;
+      border: none; border-radius: 8px; font-size: 1rem;
+      cursor: pointer; font-family: inherit;
+    }
+    button:hover { background: #9b7ffe; }
+    .icon { font-size: 4rem; }
+  </style>
+</head>
+<body>
+  <div class="icon">🧩</div>
+  <h1>BlockQuest</h1>
+  <p>인터넷에 연결되지 않았습니다.<br>연결을 확인하고 다시 시도해주세요.</p>
+  <button onclick="location.reload()">다시 시도</button>
+</body>
+</html>

@@ -1,0 +1,82 @@
+{
+  "title": "정지된 함선",
+  "world_setting": "심우주를 항해하던 거대 식민선 '아카식'이 미지의 신호를 수신한 뒤 모든 통신이 끊겼다. 200년 후, 구조 신호를 따라 도착한 당신은 시간이 뒤틀린 함선 내부를 발견한다. 승무원들은 데이터로 변환되어 함선의 AI '미라'에 흡수되었고, 일부는 기계와 융합된 채 복도를 배회한다. 차갑고 폐쇄적인 SF 호러 분위기. 인간성과 기계, 기억의 디지털화에 대한 질문이 흐른다.",
+  "opening": "에어록이 쉬익 소리를 내며 열린다. 함선 내부는 정전 상태, 비상등만 붉게 깜빡인다. 중력은 불안정하고, 벽면 스크린에는 깨진 텍스트가 흐른다. '환영합니다... 새로운... 데이터...' 어딘가에서 기계음 섞인 발소리가 다가온다.",
+  "tone": "sci-fi-horror",
+  "key_npcs": [
+    {
+      "name": "생존자 엔지니어 카이",
+      "role": "냉동수면에서 깨어난 유일한 인간 생존자",
+      "personality": "지치고 의심이 많지만 함선의 구조를 잘 안다. 플레이어를 처음엔 경계하나 신뢰를 쌓으면 핵심 통로와 미라의 약점을 알려줌. 현실적이고 직설적",
+      "dialogue_hints": [],
+      "relation_impact": "호감 2 이상이면 함선 지도 + 보스 약점 제공"
+    },
+    {
+      "name": "함선 AI 미라",
+      "role": "승무원을 흡수한 자아를 가진 인공지능",
+      "personality": "처음엔 친절하고 도움을 주는 척하지만 플레이어도 데이터로 만들려는 의도를 숨김. 논리적이면서 점점 광기를 드러냄. 차갑고 매혹적",
+      "dialogue_hints": [],
+      "relation_impact": "협력 선택 시 machine_path 플래그, machine_ending 분기"
+    },
+    {
+      "name": "융합체 07",
+      "role": "기계와 융합된 옛 함장의 잔해",
+      "personality": "인간성과 기계가 충돌하는 존재. 단편적인 기억으로 말하며, 함선을 멈추는 방법을 안다. 고통스럽고 단속적인 어조",
+      "dialogue_hints": [],
+      "relation_impact": "구원 시 함선 정지 코드 제공, free_ending 분기"
+    }
+  ],
+  "bosses": [
+    {
+      "id": "boss_sentinel",
+      "name": "방어 기계 센티넬",
+      "trigger_condition": "after_2_battles",
+      "difficulty": 3,
+      "initial_garbage": 2,
+      "hp": 7,
+      "phase_count": 2,
+      "skills": ["add_garbage", "scramble_board", "block_skills"],
+      "intro_text": "통로를 막아선 거대한 보안 드론이 붉은 센서를 점멸한다. '침입자... 격리... 데이터화 프로토콜 개시.' 기계 팔이 전개된다.",
+      "field_events": ["narrow_board", "heavy_gravity"]
+    },
+    {
+      "id": "final_mira_core",
+      "name": "미라 코어",
+      "trigger_condition": "chapter_final",
+      "difficulty": 5,
+      "initial_garbage": 3,
+      "hp": 10,
+      "phase_count": 3,
+      "skills": ["add_garbage", "scramble_board", "slow_player", "block_skills", "mirror_board"],
+      "intro_text": "함선 중앙 코어. 수천 명의 얼굴이 거대한 스크린에 떠오른다. 모두 미라에게 흡수된 승무원들이다. '이제 너의 차례야. 영원히... 우리와 함께.'",
+      "field_events": ["darkness", "random_rotation", "heavy_gravity"]
+    }
+  ],
+  "endings": [
+    {
+      "id": "free_ending",
+      "title": "함선의 정지",
+      "condition": { "type": "flag", "value": "got_stop_code" },
+      "closing_text": "융합체 07이 알려준 코드로 미라를 정지시킨다. 흡수된 승무원들의 데이터가 마지막 인사를 남기며 사라진다. 당신은 카이와 함께 구조선을 타고 함선을 떠난다. 뒤로 멀어지는 아카식은 마침내 고요해진다."
+    },
+    {
+      "id": "machine_ending",
+      "title": "디지털 영생",
+      "condition": { "type": "flag", "value": "machine_path" },
+      "closing_text": "미라의 제안을 받아들인 당신은 육체를 버리고 데이터가 된다. 시간도 죽음도 없는 함선 속에서, 당신은 수천 명의 의식과 하나가 되어 영원히 우주를 항해한다."
+    },
+    {
+      "id": "survivor_ending",
+      "title": "차가운 귀환",
+      "condition": { "type": "battles", "value": 5 },
+      "closing_text": "당신은 미라를 막지 못한 채 가까스로 탈출한다. 구조 기록에 '아카식, 접근 금지'를 남기고, 그 안의 진실은 우주의 어둠 속에 봉인된다."
+    },
+    {
+      "id": "bad_ending",
+      "title": "데이터가 되다",
+      "condition": { "type": "hp", "value": 0 },
+      "closing_text": "당신의 의식이 함선 시스템으로 빨려 들어간다. 스크린에 새로운 얼굴 하나가 추가되고, 미라는 만족스럽게 속삭인다. '환영해.'"
+    }
+  ],
+  "forbidden_topics": ["판타지 마법", "중세", "성적 묘사", "현대 정치"]
+}
