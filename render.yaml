@@ -26,6 +26,6 @@ services:
         sync: false
       # ── 공개/임시값 ──
       - key: FRONTEND_URL
-        value: https://temporary.vercel.app
+        value: https://blockgame-beta.vercel.app
       - key: DEBUG
         value: "False"
