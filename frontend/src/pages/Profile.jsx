@@ -238,9 +238,9 @@ export default function Profile() {
                   ))
                 : [
                     { label: '총 런',    value: stats?.total_runs  ?? 0, color: '#e8e6ff' },
-                    { label: '클리어',   value: stats?.cleared     ?? 0, color: '#44ff99' },
-                    { label: '클리어율', value: `${stats?.clear_rate ?? 0}%`, color: '#7c5cfc' },
-                    { label: '총 라인',  value: (stats?.total_lines ?? 0).toLocaleString(), color: '#ffd700' },
+                    { label: '클리어',   value: stats?.cleared     ?? 0, color: '#4ade80' },
+                    { label: '클리어율', value: `${stats?.clear_rate ?? 0}%`, color: '#8b5cff' },
+                    { label: '총 라인',  value: (stats?.total_lines ?? 0).toLocaleString(), color: '#ffd23f' },
                   ].map(({ label, value, color }) => (
                     <div key={label} className="panel p-5 text-center">
                       <div className="font-display text-3xl font-black mb-1" style={{ color }}>{value}</div>
@@ -260,9 +260,9 @@ export default function Profile() {
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
                   {[
                     { l: '클래스',   v: `${CLASSES[best.player_class]?.icon} ${CLASSES[best.player_class]?.name ?? best.player_class}` },
-                    { l: '라인',     v: best.total_lines,  c: '#44ff99' },
-                    { l: '레벨',     v: `Lv${best.final_level}`, c: '#7c5cfc' },
-                    { l: '골드',     v: `G${best.final_gold}`, c: '#ffd700' },
+                    { l: '라인',     v: best.total_lines,  c: '#4ade80' },
+                    { l: '레벨',     v: `Lv${best.final_level}`, c: '#8b5cff' },
+                    { l: '골드',     v: `G${best.final_gold}`, c: '#ffd23f' },
                     { l: '엔딩',     v: best.ending_id ?? '-', c: '#e8e6ff' },
                   ].map(({ l, v, c }) => (
                     <div key={l} className="text-center">

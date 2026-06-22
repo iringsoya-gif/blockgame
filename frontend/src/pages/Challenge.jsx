@@ -19,7 +19,7 @@ function formatDate(d = new Date()) {
   return d.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'long' })
 }
 
-function Stars({ n, max = 5, color = '#ffd700' }) {
+function Stars({ n, max = 5, color = '#ffd23f' }) {
   return (
     <div className="flex gap-0.5">
       {Array.from({ length: max }).map((_, i) => (
@@ -237,7 +237,7 @@ export default function Challenge() {
         <div className="animate-fade-in space-y-3">
           <p className="font-mono text-brand-muted text-xs tracking-widest">— 챌린지 결과 —</p>
           <h2 className="font-display text-5xl font-black"
-            style={{ color: result.win ? '#44ff99' : '#ff4466' }}>
+            style={{ color: result.win ? '#4ade80' : '#ff5d73' }}>
             {result.win ? '✦ 성공 ✦' : '✕ 실패 ✕'}
           </h2>
           {result.rank && (
@@ -247,9 +247,9 @@ export default function Challenge() {
 
         <div className="panel p-6 grid grid-cols-3 gap-6 min-w-72">
           {[
-            { l: '점수', v: (result.score ?? 0).toLocaleString() + 'pt', c: '#44ff99' },
-            { l: '라인', v: `${result.lines_cleared ?? 0}줄`,            c: '#7c5cfc' },
-            { l: '시간', v: `${result.time_taken ?? 0}초`,               c: '#ffd700' },
+            { l: '점수', v: (result.score ?? 0).toLocaleString() + 'pt', c: '#4ade80' },
+            { l: '라인', v: `${result.lines_cleared ?? 0}줄`,            c: '#8b5cff' },
+            { l: '시간', v: `${result.time_taken ?? 0}초`,               c: '#ffd23f' },
           ].map(({ l, v, c }) => (
             <div key={l} className="text-center">
               <div className="text-brand-muted font-mono text-xs mb-1">{l}</div>

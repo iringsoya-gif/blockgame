@@ -165,12 +165,12 @@ export default function Upgrade() {
                 </div>
                 <ul className="space-y-2 text-sm font-body text-brand-text">
                   {[
-                    { text: '스토리 3개 전체',    color: '#44ff99' },
-                    { text: '모든 클래스 5종',    color: '#44ff99' },
-                    { text: '무제한 스킬 트리',   color: '#44ff99' },
-                    { text: '100개 런 기록',      color: '#7c5cfc' },
-                    { text: '5개 세이브 슬롯',    color: '#7c5cfc' },
-                    { text: '프리미엄 뱃지',      color: '#ffd700' },
+                    { text: '스토리 3개 전체',    color: '#4ade80' },
+                    { text: '모든 클래스 5종',    color: '#4ade80' },
+                    { text: '무제한 스킬 트리',   color: '#4ade80' },
+                    { text: '100개 런 기록',      color: '#8b5cff' },
+                    { text: '5개 세이브 슬롯',    color: '#8b5cff' },
+                    { text: '프리미엄 뱃지',      color: '#ffd23f' },
                   ].map(({ text, color }) => (
                     <li key={text} className="flex items-center gap-2">
                       <span style={{ color }}>✓</span>
