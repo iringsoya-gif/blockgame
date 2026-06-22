@@ -587,16 +587,11 @@ export class BattleScene extends Phaser.Scene {
     if (this._lastTSpin && cleared > 0) this._stats.tspin_count++
     if ((combo ?? 0) > this._stats.max_combo) this._stats.max_combo = combo ?? 0
     if (this.playerBoard.isPerfectClear()) this._stats.perfect_clears++
-    // B2B 연속 추적 (테트리스/T-spin 연속)
+    // B2B 연속 추적 — clearResult.b2b 체인 카운터로 직접 추적
     if (cleared > 0) {
-      const isB2B = label?.includes('B2B') || cleared === 4 || (this._lastTSpin && cleared > 0)
-      if (isB2B) {
-        this._b2bStreak++
-        if (this._b2bStreak > this._stats.max_b2b_streak) {
-          this._stats.max_b2b_streak = this._b2bStreak
-        }
-      } else {
-        this._b2bStreak = 0  // 일반 클리어로 끊김
+      this._b2bStreak = clearResult.b2b
+      if (this._b2bStreak > this._stats.max_b2b_streak) {
+        this._stats.max_b2b_streak = this._b2bStreak
       }
     }
 
@@ -654,6 +649,11 @@ export class BattleScene extends Phaser.Scene {
         this.enemyBoard.addGarbage(send)
         sound.garbageReceive()
       }
+    }
+
+    // B2B Surge — 체인이 끊릴 때 적에게 추가 가비지 (최대 4줄)
+    if (clearResult.surge > 0 && !this.isBoss && this.goal === GOALS.VERSUS) {
+      this.enemyBoard.addGarbage(Math.min(4, Math.floor(clearResult.surge / 2)))
     }
 
     if (this.isBoss && cleared > 0) this._dealBossDamage(cleared)

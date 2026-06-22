@@ -56,7 +56,7 @@ export class Board {
     this._lastTSpin = false
     this._lastClear = 0
     this.combo = -1
-    this.b2b   = false
+    this.b2b   = 0
     this.lastRotation = false
   }
 
@@ -66,7 +66,7 @@ export class Board {
     this._lastTSpin = false
     this._lastClear = 0
     this.combo = -1
-    this.b2b   = false
+    this.b2b   = 0
     this.lastRotation = false
   }
 
@@ -170,7 +170,7 @@ export class Board {
     if (cleared === 0) {
       this.combo = -1
       this._lastTSpin = false
-      return { cleared, score: 0, label: '', spin, b2b: this.b2b, surge: 0 }
+      return { cleared, score: 0, label: '', spin, b2b: this.b2b, surge: 0, allClear: false }
     }
 
     this.combo++
@@ -184,20 +184,30 @@ export class Board {
         ? [0, 200, 400][cleared] ?? 400
         : [0, 100, 300, 500, 800][cleared] ?? 800
 
+    const allClear = this.grid.every(row => row.every(c => c === 0))
     const prevB2b = this.b2b
-    const b2bBonus = (isDifficult && prevB2b) ? 1.5 : 1
-    this.b2b = isDifficult
-    const score = Math.floor(BASE * b2bBonus + comboBonus)
+    const b2bBroken = !allClear && !isDifficult && cleared > 0 && prevB2b > 0
+    const surge = (b2bBroken && prevB2b >= 4) ? prevB2b : 0
+
+    if (allClear) this.b2b = prevB2b + 2
+    else if (isDifficult) this.b2b = prevB2b + 1
+    else if (cleared > 0) this.b2b = 0
+
+    const b2bBonus = (isDifficult && prevB2b > 0) ? 1.5 : 1
+    const allClearBonus = allClear ? 2000 : 0
+    const score = Math.floor(BASE * b2bBonus + comboBonus + allClearBonus + surge * 100)
 
     let label = ['', 'SINGLE', 'DOUBLE', 'TRIPLE', 'TETRIS'][cleared] ?? ''
     if (spin === 'full') label = `T-SPIN ${label}`
     else if (spin === 'mini') label = `T-SPIN MINI ${label}`
-    if (isDifficult && prevB2b) label = `B2B ${label}`
+    if (isDifficult && prevB2b > 0) label = `B2B ${label}`
+    if (allClear) label = `PERFECT CLEAR`
+    if (surge > 0) label += ` ⚡SURGE`
     if (this.combo >= 2) label += ` COMBO x${this.combo}`
 
     this._lastClear = cleared
     this._lastTSpin = isSpin
-    return { cleared, score, label, combo: this.combo, b2b: this.b2b, spin, surge: 0 }
+    return { cleared, score, label, combo: this.combo, b2b: this.b2b, spin, surge, allClear }
   }
 
   addGarbage(lines) {
