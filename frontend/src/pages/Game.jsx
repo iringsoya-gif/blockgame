@@ -27,17 +27,17 @@ import Navbar         from '../components/layout/Navbar'
 const VIEW = { STORY: 'story', ANNOUNCE: 'announce', BATTLE: 'battle', ENDING: 'ending' }
 
 const ENDING_INFO = {
-  true_ending:    { title: '탑의 해방',      color: '#44ff99', emoji: '✦', cleared: true  },
+  true_ending:    { title: '탑의 해방',      color: '#4ade80', emoji: '✦', cleared: true  },
   harmony_ending: { title: '완전한 화음',    color: '#ff44cc', emoji: '🎵', cleared: true  },
   memory_ending:  { title: '기억의 해방',    color: '#ff8800', emoji: '💾', cleared: true  },
   secret_ending:  { title: '정령과의 계약', color: '#aa88ff', emoji: '◈', cleared: true  },
   thief_ending:   { title: '자유로운 선율', color: '#ffaa00', emoji: '🎶', cleared: true  },
   machine_ending: { title: '기계와의 동행', color: '#88aaff', emoji: '🤖', cleared: true  },
-  bad_ending:     { title: '탑에 삼켜지다', color: '#ff4466', emoji: '✕', cleared: false },
-  redemption_ending: { title: '기사들의 안식',  color: '#ffd700', emoji: '⚔', cleared: true  },
+  bad_ending:     { title: '탑에 삼켜지다', color: '#ff5d73', emoji: '✕', cleared: false },
+  redemption_ending: { title: '기사들의 안식',  color: '#ffd23f', emoji: '⚔', cleared: true  },
   fallen_ending:     { title: '새로운 별',      color: '#aa44ff', emoji: '★', cleared: true  },
   escape_ending:     { title: '살아남은 자',    color: '#88aaff', emoji: '🚪', cleared: true  },
-  free_ending:       { title: '함선의 정지',    color: '#44ff99', emoji: '🛸', cleared: true  },
+  free_ending:       { title: '함선의 정지',    color: '#4ade80', emoji: '🛸', cleared: true  },
   survivor_ending:   { title: '차가운 귀환',    color: '#88aaff', emoji: '❄', cleared: true  },
 }
 
@@ -363,7 +363,7 @@ export default function Game() {
 
   // ── 엔딩 ──────────────────────────────────────────
   if (view === VIEW.ENDING && endingId) {
-    const info   = ENDING_INFO[endingId] ?? { title: endingId, color: '#7c5cfc', emoji: '?', cleared: false }
+    const info   = ENDING_INFO[endingId] ?? { title: endingId, color: '#8b5cff', emoji: '?', cleared: false }
     const lastGm = [...messages].reverse().find(m => m.role === 'gm')
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-8 p-8 text-center bg-brand-bg relative overflow-hidden">
@@ -458,10 +458,10 @@ export default function Game() {
               <div className="h-full rounded-full transition-all duration-500"
                 style={{
                   width: `${gameState.hp}%`,
-                  background: gameState.hp > 50 ? '#44ff99' : gameState.hp > 25 ? '#ffaa00' : '#ff4466',
+                  background: gameState.hp > 50 ? '#4ade80' : gameState.hp > 25 ? '#ffaa00' : '#ff5d73',
                 }} />
             </div>
-            <span style={{ color: gameState.hp > 25 ? '#44ff99' : '#ff4466' }}>{gameState.hp}</span>
+            <span style={{ color: gameState.hp > 25 ? '#4ade80' : '#ff5d73' }}>{gameState.hp}</span>
           </div>
           {/* XP */}
           <div className="hidden sm:flex items-center gap-1.5 font-mono text-xs">

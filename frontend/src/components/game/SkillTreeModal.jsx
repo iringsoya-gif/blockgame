@@ -102,10 +102,10 @@ export default function SkillTreeModal({
                   <div className="font-body text-xs text-brand-muted mb-3 leading-relaxed">{u.desc}</div>
 
                   <div className="flex gap-3 font-mono text-xs flex-wrap">
-                    <span style={{ color: gold >= u.cost.gold ? '#ffd700' : '#ff4466' }}>
+                    <span style={{ color: gold >= u.cost.gold ? '#ffd23f' : '#ff5d73' }}>
                       G {u.cost.gold}
                     </span>
-                    <span style={{ color: level >= u.cost.level ? '#7c5cfc' : '#ff4466' }}>
+                    <span style={{ color: level >= u.cost.level ? '#8b5cff' : '#ff5d73' }}>
                       Lv {u.cost.level}+
                     </span>
                     {u.requires && (

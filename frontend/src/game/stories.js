@@ -27,7 +27,7 @@ export const STORIES = {
     id: 'citadel', title: '별을 삼킨 성채', subtitle: '13명의 기사 망령',
     icon: '🏰', difficulty: 5, premium: true,
     desc: '검은 별이 박힌 옛 성채. 원탁의 기사 망령들을 넘어 떨어진 별의 핵에 도달하라.',
-    theme: '#ffd700', tags: ['기사도', '비극', '구원'], estimatedTime: '90~120분', bossCount: 2,
+    theme: '#ffd23f', tags: ['기사도', '비극', '구원'], estimatedTime: '90~120분', bossCount: 2,
   },
   vessel: {
     id: 'vessel', title: '정지된 함선', subtitle: '잠식된 AI와의 대치',

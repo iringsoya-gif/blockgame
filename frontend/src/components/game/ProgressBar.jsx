@@ -38,7 +38,7 @@ const ProgressBar = memo(function ProgressBar({ battleCount = 0, totalBosses = 2
         <div className="h-full rounded-full transition-all duration-700"
           style={{
             width: `${pct}%`,
-            background: 'linear-gradient(90deg, #5540cc, #7c5cfc, #9b7ffe)',
+            background: 'linear-gradient(90deg, #5540cc, #8b5cff, #a855f7)',
           }} />
       </div>
     </div>

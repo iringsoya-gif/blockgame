@@ -6,9 +6,9 @@ const NPCRelationPanel = memo(function NPCRelationPanel({ relations = {} }) {
   if (Object.keys(relations).length === 0) return null
 
   const getRelationColor = (val) => {
-    if (val >= 2)  return '#44ff99'
+    if (val >= 2)  return '#4ade80'
     if (val >= 1)  return '#88ccff'
-    if (val <= -2) return '#ff4466'
+    if (val <= -2) return '#ff5d73'
     if (val <= -1) return '#ffaa44'
     return '#6060a0'
   }

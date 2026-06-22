@@ -30,7 +30,7 @@ export default function BattleResult({ result, onClose }) {
   const win     = result.win
   const labels  = GOAL_LABELS[goal] ?? GOAL_LABELS.versus
   const resultLabel = win ? labels.win : labels.lose
-  const resultColor = win ? '#44ff99' : '#ff4466'
+  const resultColor = win ? '#4ade80' : '#ff5d73'
 
   const stats = result.detailed_stats ?? {}
   const hasDetails = Object.keys(stats).length > 0
@@ -62,8 +62,8 @@ export default function BattleResult({ result, onClose }) {
 
         {/* 주요 지표 */}
         <div className="space-y-0.5 mb-4">
-          <StatRow label="클리어 라인" value={`${result.lines_cleared ?? 0}줄`}   color="#44ff99" />
-          <StatRow label="점수"        value={(result.score ?? 0).toLocaleString() + 'pt'} color="#7c5cfc" />
+          <StatRow label="클리어 라인" value={`${result.lines_cleared ?? 0}줄`}   color="#4ade80" />
+          <StatRow label="점수"        value={(result.score ?? 0).toLocaleString() + 'pt'} color="#8b5cff" />
           <StatRow label="소요 시간"   value={`${result.time_taken ?? 0}초`}      color="#aaaacc" />
 
           {/* 상세 통계 (있을 때만) */}
@@ -77,7 +77,7 @@ export default function BattleResult({ result, onClose }) {
             <StatRow label="최고 콤보" value={`x${stats.max_combo}`}  color="#ff4499" highlight />
           )}
           {stats.perfect_clears > 0 && (
-            <StatRow label="퍼펙트 클리어" value={`${stats.perfect_clears}회`} color="#ffd700" highlight />
+            <StatRow label="퍼펙트 클리어" value={`${stats.perfect_clears}회`} color="#ffd23f" highlight />
           )}
         </div>
 

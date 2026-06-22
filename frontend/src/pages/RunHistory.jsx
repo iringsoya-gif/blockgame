@@ -6,18 +6,18 @@ import { api } from '../lib/api'
 import { CLASSES } from '../game/classes'
 
 const ENDING_MAP = {
-  true_ending:    { label: '탑의 해방',      color: '#44ff99', story: '망각의 탑' },
+  true_ending:    { label: '탑의 해방',      color: '#4ade80', story: '망각의 탑' },
   harmony_ending: { label: '완전한 화음',    color: '#ff44cc', story: '심연의 노래' },
   memory_ending:  { label: '기억의 해방',    color: '#ff8800', story: '폐허의 기억' },
   secret_ending:  { label: '정령과의 계약', color: '#aa88ff', story: '망각의 탑' },
   thief_ending:   { label: '자유로운 선율', color: '#ffaa00', story: '심연의 노래' },
   machine_ending: { label: '기계와의 동행', color: '#88aaff', story: '폐허의 기억' },
-  redemption_ending: { label: '기사들의 안식', color: '#ffd700', story: '별을 삼킨 성채' },
+  redemption_ending: { label: '기사들의 안식', color: '#ffd23f', story: '별을 삼킨 성채' },
   fallen_ending:     { label: '새로운 별',     color: '#aa44ff', story: '별을 삼킨 성채' },
   escape_ending:     { label: '살아남은 자',   color: '#88aaff', story: '별을 삼킨 성채' },
-  free_ending:       { label: '함선의 정지',   color: '#44ff99', story: '정지된 함선' },
+  free_ending:       { label: '함선의 정지',   color: '#4ade80', story: '정지된 함선' },
   survivor_ending:   { label: '차가운 귀환',   color: '#88aaff', story: '정지된 함선' },
-  bad_ending:     { label: '탑에 삼켜지다', color: '#ff4466', story: null },
+  bad_ending:     { label: '탑에 삼켜지다', color: '#ff5d73', story: null },
 }
 
 const GUIDE_LABELS = {
@@ -93,9 +93,9 @@ export default function RunHistory() {
             ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
             : [
                 { label: '총 런',    value: stats?.total_runs ?? runs.length,            color: '#e8e6ff' },
-                { label: '클리어',   value: stats?.cleared ?? clearedCount, color: '#44ff99' },
-                { label: '클리어율', value: `${stats?.clear_rate ?? 0}%`,               color: '#7c5cfc' },
-                { label: '총 라인',  value: (stats?.total_lines ?? 0).toLocaleString(),  color: '#ffd700' },
+                { label: '클리어',   value: stats?.cleared ?? clearedCount, color: '#4ade80' },
+                { label: '클리어율', value: `${stats?.clear_rate ?? 0}%`,               color: '#8b5cff' },
+                { label: '총 라인',  value: (stats?.total_lines ?? 0).toLocaleString(),  color: '#ffd23f' },
               ].map(s => <StatCard key={s.label} {...s} />)
           }
         </div>
@@ -110,10 +110,10 @@ export default function RunHistory() {
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
               {[
                 { l: '클래스',  v: `${CLASSES[best.player_class]?.icon ?? ''} ${CLASSES[best.player_class]?.name ?? best.player_class}` },
-                { l: '스토리',  v: GUIDE_LABELS[best.guide_id] ?? '-',        c: '#7c5cfc' },
-                { l: '라인',    v: best.total_lines,                           c: '#44ff99' },
-                { l: '레벨',    v: `Lv${best.final_level}`,                   c: '#7c5cfc' },
-                { l: '골드',    v: `G${best.final_gold}`,                     c: '#ffd700' },
+                { l: '스토리',  v: GUIDE_LABELS[best.guide_id] ?? '-',        c: '#8b5cff' },
+                { l: '라인',    v: best.total_lines,                           c: '#4ade80' },
+                { l: '레벨',    v: `Lv${best.final_level}`,                   c: '#8b5cff' },
+                { l: '골드',    v: `G${best.final_gold}`,                     c: '#ffd23f' },
               ].map(({ l, v, c }) => (
                 <div key={l} className="text-center">
                   <div className="text-brand-muted font-mono text-2xs mb-1">{l}</div>

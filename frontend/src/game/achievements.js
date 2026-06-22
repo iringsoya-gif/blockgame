@@ -270,10 +270,10 @@ export const ACHIEVEMENTS = {
 
 export const RARITY_COLORS = {
   common:    '#aaaacc',
-  uncommon:  '#44ff99',
+  uncommon:  '#4ade80',
   rare:      '#5588ff',
   epic:      '#aa44ff',
-  legendary: '#ffd700',
+  legendary: '#ffd23f',
 }
 
 const STORAGE_KEY = 'bq_achievements'

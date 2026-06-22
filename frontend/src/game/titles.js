@@ -13,7 +13,7 @@ export const TITLES = {
 
   // ── 전투 ──────────────────────────────────────────
   line_breaker: {
-    id: 'line_breaker', name: '라인 브레이커', color: '#44ff99',
+    id: 'line_breaker', name: '라인 브레이커', color: '#4ade80',
     desc: '누적 500줄 클리어', rarity: 'uncommon',
     condition: (s) => (s.total_lines ?? 0) >= 500,
   },
@@ -35,12 +35,12 @@ export const TITLES = {
 
   // ── 스토리 ────────────────────────────────────────
   tower_conqueror: {
-    id: 'tower_conqueror', name: '탑의 정복자', color: '#ffd700',
+    id: 'tower_conqueror', name: '탑의 정복자', color: '#ffd23f',
     desc: '망각의 탑 클리어', rarity: 'uncommon',
     condition: (s) => (s.class_clears?.warrior ?? 0) + (s.clears ?? 0) >= 1,
   },
   true_hero: {
-    id: 'true_hero', name: '진정한 영웅', color: '#44ff99',
+    id: 'true_hero', name: '진정한 영웅', color: '#4ade80',
     desc: '트루 엔딩 달성', rarity: 'epic',
     condition: (s) => (s.endings?.true_ending ?? 0) >= 1,
   },
@@ -57,12 +57,12 @@ export const TITLES = {
 
   // ── 챌린지 ────────────────────────────────────────
   daily_warrior: {
-    id: 'daily_warrior', name: '일일 전사', color: '#7c5cfc',
+    id: 'daily_warrior', name: '일일 전사', color: '#8b5cff',
     desc: '챌린지 10회 완료', rarity: 'uncommon',
     condition: (s) => (s.challenge_wins ?? 0) >= 10,
   },
   champion: {
-    id: 'champion', name: '챔피언', color: '#ffd700',
+    id: 'champion', name: '챔피언', color: '#ffd23f',
     desc: '일일 챌린지 1위 달성', rarity: 'legendary',
     condition: (s) => (s.challenge_first_place ?? 0) >= 1,
   },
@@ -74,7 +74,7 @@ export const TITLES = {
 
   // ── 신규 스토리 ───────────────────────────────────
   round_table: {
-    id: 'round_table', name: '원탁의 계승자', color: '#ffd700',
+    id: 'round_table', name: '원탁의 계승자', color: '#ffd23f',
     desc: '별을 삼킨 성채 클리어', rarity: 'epic',
     condition: (s) => (s.endings?.redemption_ending ?? 0) >= 1 || (s.endings?.escape_ending ?? 0) >= 1,
   },
@@ -96,7 +96,7 @@ export const TITLES = {
     condition: (s) => (s.total_battles ?? 0) >= 100,
   },
   class_master: {
-    id: 'class_master', name: '만물의 대가', color: '#ffd700',
+    id: 'class_master', name: '만물의 대가', color: '#ffd23f',
     desc: '서로 다른 클래스로 5번 클리어', rarity: 'legendary',
     condition: (s) => Object.keys(s.class_clears ?? {}).length >= 5,
   },
@@ -115,10 +115,10 @@ export const TITLES = {
 export const RARITY_ORDER = { common: 0, uncommon: 1, rare: 2, epic: 3, legendary: 4 }
 export const RARITY_COLORS = {
   common:    '#8888aa',
-  uncommon:  '#44ff99',
+  uncommon:  '#4ade80',
   rare:      '#5599ff',
   epic:      '#aa44ff',
-  legendary: '#ffd700',
+  legendary: '#ffd23f',
 }
 
 const STORAGE_KEY = 'bq_unlocked_titles'
