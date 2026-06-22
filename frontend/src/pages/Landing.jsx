@@ -11,16 +11,16 @@ const PARTICLES = Array.from({ length: 22 }, (_, i) => ({
   left:  Math.random() * 100,
   delay: Math.random() * 8,
   dur:   Math.random() * 6 + 6,
-  color: ['#7c5cfc','#9b7ffe','#44ff99','#ff4466','#ffd700'][Math.floor(Math.random()*5)],
+  color: ['#ff5d73','#ffd23f','#4ade80','#38bdf8','#a855f7'][Math.floor(Math.random()*5)],
 }))
 
 // 테트리스 블록 미니 애니메이션 (배경 장식)
 const DECO_PIECES = [
-  { shape: [[1,1],[1,1]], color: '#ffd700', top: '15%', left: '8%',  rotate: 15, scale: 1.2 },
-  { shape: [[1,1,1,1]],   color: '#00f5ff', top: '65%', left: '5%',  rotate: -20, scale: 0.9 },
-  { shape: [[0,1,0],[1,1,1]], color: '#aa00ff', top: '25%', right: '7%', rotate: 30, scale: 1.1 },
-  { shape: [[1,1,0],[0,1,1]], color: '#ff4466', top: '70%', right: '6%', rotate: -15, scale: 0.8 },
-  { shape: [[1,0,0],[1,1,1]], color: '#ff8800', top: '45%', left: '3%', rotate: 10, scale: 0.7 },
+  { shape: [[1,1],[1,1]], color: '#ffd23f', top: '15%', left: '8%',  rotate: 15, scale: 1.2 },
+  { shape: [[1,1,1,1]],   color: '#38bdf8', top: '65%', left: '5%',  rotate: -20, scale: 0.9 },
+  { shape: [[0,1,0],[1,1,1]], color: '#a855f7', top: '25%', right: '7%', rotate: 30, scale: 1.1 },
+  { shape: [[1,1,0],[0,1,1]], color: '#ff5d73', top: '70%', right: '6%', rotate: -15, scale: 0.8 },
+  { shape: [[1,0,0],[1,1,1]], color: '#4ade80', top: '45%', left: '3%', rotate: 10, scale: 0.7 },
 ]
 
 function DecoPiece({ piece }) {
@@ -110,9 +110,9 @@ export default function Landing() {
       {/* ── 배경 레이어 ── */}
       <div className="absolute inset-0 bg-hero-glow pointer-events-none" />
       <div ref={bgRef} className="absolute inset-0 transition-transform duration-75 ease-out pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-accent/5 rounded-full blur-[100px]" />
-        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-brand-danger/5 rounded-full blur-[80px]" />
-        <div className="absolute top-2/3 left-1/2 w-64 h-64 bg-brand-success/4 rounded-full blur-[60px]" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-candy-purple/10 rounded-full blur-[100px]" />
+        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-candy-pink/10 rounded-full blur-[80px]" />
+        <div className="absolute top-2/3 left-1/2 w-64 h-64 bg-candy-blue/10 rounded-full blur-[60px]" />
       </div>
 
       {/* 파티클 */}
@@ -169,8 +169,8 @@ export default function Landing() {
           </div>
 
           <h1 className="font-display font-black tracking-wider leading-none">
-            <span className="block text-7xl text-glow-accent"
-              style={{ color: '#7c5cfc', textShadow: '0 0 40px rgba(124,92,252,0.6)' }}>
+            <span className="block text-7xl text-candy-rainbow"
+              style={{ filter: 'drop-shadow(0 0 30px rgba(168,85,247,0.45))' }}>
               BLOCK
             </span>
             <span className="block text-7xl text-brand-text">QUEST</span>
