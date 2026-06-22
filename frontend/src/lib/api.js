@@ -1,6 +1,10 @@
 import { supabase } from './supabase'
 
-const BASE = import.meta.env.VITE_API_URL ?? '/api'
+// VITE_API_URL이 설정돼 있으면 그것을 우선 사용.
+// 미설정 시: 프로덕션 빌드는 Render 백엔드, 로컬 개발은 vite 프록시(/api).
+const BASE =
+  import.meta.env.VITE_API_URL ??
+  (import.meta.env.PROD ? 'https://blockgame-api.onrender.com/api' : '/api')
 
 // Railway 슬립 대응 웜업
 let warmedUp = false
