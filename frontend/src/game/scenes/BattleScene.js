@@ -291,6 +291,7 @@ export class BattleScene extends Phaser.Scene {
     this.pieceY = -1  // 스폰 위치 개선
     this._lastTSpin = false
     this._holdUsed  = false
+    this.playerBoard.lastRotation = false
     // 새 블록은 락 상태 초기화
     this._grounded   = false
     this._lockTimer  = 0
@@ -503,6 +504,7 @@ export class BattleScene extends Phaser.Scene {
   _moveH(dir) {
     if (this.playerBoard.isValid(this.currentPiece, this.pieceX + dir, this.pieceY)) {
       this.pieceX += dir
+      this.playerBoard.lastRotation = false
       sound.move()
       this._resetLockDelay()
     }
@@ -515,6 +517,7 @@ export class BattleScene extends Phaser.Scene {
       this.pieceX = result.x
       this.pieceY = result.y
       this._lastTSpin = result.isTSpin
+      this.playerBoard.lastRotation = true
       sound.rotate()
       this._resetLockDelay()
     }
@@ -535,6 +538,7 @@ export class BattleScene extends Phaser.Scene {
       this.pieceY++; dropped++
     }
     this.score += dropped * 2  // 하드 드롭 보너스
+    this.playerBoard.lastRotation = false
     sound.hardDrop()
     this._stats.hard_drops++
     this._playerStepDown(true)
@@ -545,6 +549,7 @@ export class BattleScene extends Phaser.Scene {
 
     if (!isHardDrop && this.playerBoard.isValid(this.currentPiece, this.pieceX, this.pieceY + 1)) {
       this.pieceY++
+      this.playerBoard.lastRotation = false
       if (this._softDropping) { this.score += 1 }
       return
     }
@@ -573,7 +578,8 @@ export class BattleScene extends Phaser.Scene {
       }
     }
 
-    const clearResult = this.playerBoard.clearLines(this._lastTSpin)
+    const spin = this.playerBoard.lastRotation ? this.playerBoard.detectSpin(this.currentPiece, this.pieceX, this.pieceY) : 'none'
+    const clearResult = this.playerBoard.clearLines(spin)
     const { cleared, score: clearScore, label, combo } = clearResult
 
     // 상세 통계 수집

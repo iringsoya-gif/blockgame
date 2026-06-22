@@ -57,6 +57,7 @@ export class Board {
     this._lastClear = 0
     this.combo = -1
     this.b2b   = false
+    this.lastRotation = false
   }
 
   reset() {
@@ -66,6 +67,7 @@ export class Board {
     this._lastClear = 0
     this.combo = -1
     this.b2b   = false
+    this.lastRotation = false
   }
 
   isValid(piece, ox, oy) {
@@ -105,8 +107,8 @@ export class Board {
       const nx = ox + dx, ny = oy - dy
       const rotatedPiece = { ...piece, shape: newShape, _rotIdx: newRotIdx }
       if (this.isValid(rotatedPiece, nx, ny)) {
-        const isTSpin = piece.name === 'T' && this._checkTSpin(rotatedPiece, nx, ny)
-        return { piece: rotatedPiece, x: nx, y: ny, isTSpin }
+        const spin = this.detectSpin(rotatedPiece, nx, ny)
+        return { piece: rotatedPiece, x: nx, y: ny, isTSpin: spin === 'full' || spin === 'mini', spin }
       }
     }
     return null
@@ -125,47 +127,77 @@ export class Board {
     return blocked >= 3
   }
 
-  // 라인 클리어 — 콤보/B2B/T-spin 점수 계산
-  clearLines(isTSpin = false) {
+  // 스핀 판정: 'none' | 'mini' | 'full'
+  detectSpin(piece, ox, oy) {
+    if (piece.name === 'T') {
+      const corners = [[0,0],[2,0],[0,2],[2,2]]
+      const blockedAt = ([dx, dy]) => {
+        const nx = ox + dx, ny = oy + dy
+        return nx < 0 || nx >= BOARD_WIDTH || ny >= BOARD_HEIGHT || (ny >= 0 && !!this.grid[ny][nx])
+      }
+      const blocked = corners.filter(blockedAt).length
+      if (blocked < 3) return 'none'
+      const front = this._tFrontCorners(piece._rotIdx ?? 0)
+      const frontBlocked = front.filter(blockedAt).length
+      return frontBlocked >= 2 ? 'full' : 'mini'
+    }
+    const immobile =
+      !this.isValid(piece, ox - 1, oy) &&
+      !this.isValid(piece, ox + 1, oy) &&
+      !this.isValid(piece, ox, oy + 1)
+    return immobile ? 'full' : 'none'
+  }
+
+  // T가 향한 두 front 코너 (box 좌표 dx,dy; +dy=아래)
+  _tFrontCorners(rotIdx) {
+    return {
+      0: [[0,0],[0,2]],
+      1: [[0,2],[2,2]],
+      2: [[2,0],[2,2]],
+      3: [[0,0],[2,0]],
+    }[rotIdx % 4]
+  }
+
+  // 라인 클리어 — 콤보/B2B/스핀 점수 계산
+  clearLines(spin = 'none') {
     let cleared = 0
     this.grid = this.grid.filter(row => {
       if (row.every(c => c !== 0)) { cleared++; return false }
       return true
     })
-    while (this.grid.length < BOARD_HEIGHT)
-      this.grid.unshift(Array(BOARD_WIDTH).fill(0))
+    while (this.grid.length < BOARD_HEIGHT) this.grid.unshift(Array(BOARD_WIDTH).fill(0))
 
     if (cleared === 0) {
       this.combo = -1
       this._lastTSpin = false
-      return { cleared, score: 0, label: '' }
+      return { cleared, score: 0, label: '', spin, b2b: this.b2b, surge: 0 }
     }
 
     this.combo++
     const comboBonus = this.combo > 0 ? this.combo * 50 : 0
+    const isSpin = spin === 'full' || spin === 'mini'
+    const isDifficult = cleared === 4 || isSpin
 
-    // B2B (Back-to-Back): 어려운 클리어 연속
-    const isDifficult = cleared === 4 || isTSpin
-    const prevB2b     = this.b2b          // 이전 상태 저장
-    const b2bBonus    = (isDifficult && prevB2b) ? 1.5 : 1
-    this.b2b          = isDifficult       // 현재 상태 업데이트
-
-    // 기본 점수
-    const BASE = isTSpin
+    const BASE = spin === 'full'
       ? [0, 800, 1200, 1600][cleared] ?? 1600
-      : [0, 100, 300,  500,  800][cleared] ?? 800
+      : spin === 'mini'
+        ? [0, 200, 400][cleared] ?? 400
+        : [0, 100, 300, 500, 800][cleared] ?? 800
+
+    const prevB2b = this.b2b
+    const b2bBonus = (isDifficult && prevB2b) ? 1.5 : 1
+    this.b2b = isDifficult
     const score = Math.floor(BASE * b2bBonus + comboBonus)
 
-    // 라벨
     let label = ['', 'SINGLE', 'DOUBLE', 'TRIPLE', 'TETRIS'][cleared] ?? ''
-    if (isTSpin)                     label = `T-SPIN ${label}`
-    if (isDifficult && prevB2b)      label = `B2B ${label}`
-    if (this.combo >= 2)             label += ` COMBO x${this.combo}`
+    if (spin === 'full') label = `T-SPIN ${label}`
+    else if (spin === 'mini') label = `T-SPIN MINI ${label}`
+    if (isDifficult && prevB2b) label = `B2B ${label}`
+    if (this.combo >= 2) label += ` COMBO x${this.combo}`
 
     this._lastClear = cleared
-    this._lastTSpin = isTSpin
-
-    return { cleared, score, label, combo: this.combo, b2b: this.b2b }
+    this._lastTSpin = isSpin
+    return { cleared, score, label, combo: this.combo, b2b: this.b2b, spin, surge: 0 }
   }
 
   addGarbage(lines) {
