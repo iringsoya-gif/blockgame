@@ -1,4 +1,4 @@
-import { PIECE_KEYS, PIECES, BOARD_WIDTH } from './Board'
+import { PIECE_KEYS, PIECES, BOARD_WIDTH, BOARD_HEIGHT } from './Board'
 
 const WEIGHTS = {
   1: { height: -0.3, holes: -0.5,  bumpiness: -0.1, lines: 0.5,  wells: -0.1 },
