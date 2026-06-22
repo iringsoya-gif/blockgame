@@ -11,7 +11,7 @@ export default {
           panelLight:  '#14143a',
           border:      '#1e1e4a',
           borderLight: '#2a2a6a',
-          accent:      '#7c5cfc',
+          accent:      '#8b5cff',
           accentHover: '#9b7ffe',
           accentDark:  '#5a3de8',
           text:        '#e8e6ff',
@@ -23,6 +23,13 @@ export default {
           successDark: '#22cc66',
           gold:        '#ffd700',
           goldDark:    '#cc9900',
+        },
+        candy: {
+          pink:   '#ff5d73',
+          yellow: '#ffd23f',
+          green:  '#4ade80',
+          blue:   '#38bdf8',
+          purple: '#a855f7',
         },
       },
       fontFamily: {
@@ -42,6 +49,9 @@ export default {
         'gradient-conic':    'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'hero-glow':         'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(124,92,252,0.3) 0%, transparent 70%)',
         'card-shine':        'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%)',
+        'candy-pop':     'linear-gradient(90deg, #ff5d73 0%, #a855f7 100%)',
+        'candy-rainbow': 'linear-gradient(90deg, #ff5d73, #ffd23f, #4ade80, #38bdf8)',
+        'candy-gloss':   'radial-gradient(circle at 35% 28%, rgba(255,255,255,0.55), transparent 62%)',
       },
       boxShadow: {
         'glow-accent':  '0 0 20px rgba(124,92,252,0.4)',
@@ -50,6 +60,9 @@ export default {
         'panel':        '0 4px 32px rgba(0,0,0,0.5)',
         'card':         '0 2px 16px rgba(0,0,0,0.4)',
         'inset-glow':   'inset 0 0 20px rgba(124,92,252,0.1)',
+        'candy-soft':  '0 6px 20px rgba(168,85,247,0.35)',
+        'candy-pink':  '0 6px 18px rgba(255,93,115,0.40)',
+        'candy-glow':  '0 0 24px rgba(168,85,247,0.45)',
       },
       animation: {
         'fade-in':       'fadeIn 0.3s ease-out',
