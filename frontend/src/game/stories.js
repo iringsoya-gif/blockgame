@@ -9,7 +9,7 @@ export const STORIES = {
     id: 'default', title: '망각의 탑', subtitle: '봉인된 악을 막아라',
     icon: '🗼', difficulty: 3, premium: false,
     desc: '고대의 탑에 봉인된 악이 깨어나고 있다. 탑을 탐험하며 진실을 밝혀라.',
-    theme: '#7c5cfc', tags: ['다크 판타지', '탐험', '봉인'], estimatedTime: '60~90분', bossCount: 2,
+    theme: '#8b5cff', tags: ['다크 판타지', '탐험', '봉인'], estimatedTime: '60~90분', bossCount: 2,
   },
   ruins: {
     id: 'ruins', title: '폐허의 기억', subtitle: '잃어버린 동료를 찾아서',
