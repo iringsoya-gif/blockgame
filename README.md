@@ -4,6 +4,8 @@
 
 AI가 이야기를 엮고, 테트리스 배틀로 운명을 결정하는 웹 게임.
 
+**🔗 Live:** https://blockgame-beta.vercel.app/
+
 ## 스택
 
 | 레이어 | 기술 |

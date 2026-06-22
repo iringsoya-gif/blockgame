@@ -63,7 +63,7 @@
    (또는 Root Directory를 `backend`로 설정)
 2. **Variables** 탭에서 환경변수 입력 (아래 체크리스트 참고)
 3. `railway.json`이 자동 인식되어 `/health`로 헬스체크합니다
-4. 배포 후 생성된 도메인(예: `https://blockquest-api.up.railway.app`)을 기록
+4. 배포 후 생성된 도메인(예: `https://blockgame-api.onrender.com`)을 기록
    - 프론트 `VITE_API_URL`에 `<도메인>/api` 형태로 설정
 
 ### 백엔드 환경변수 체크리스트
@@ -73,7 +73,7 @@ SUPABASE_URL=https://xxxxx.supabase.co       # 필수
 SUPABASE_SERVICE_KEY=eyJ...                   # 필수 (service_role)
 GROQ_API_KEY=gsk_...                          # AI 최소 1개 필수
 GEMINI_API_KEY=AIza...                        # 폴백 권장
-FRONTEND_URL=https://blockquest.vercel.app    # 필수 (CORS)
+FRONTEND_URL=https://blockgame-beta.vercel.app    # 필수 (CORS)
 DEBUG=False                                    # 프로덕션은 False
 POLAR_API_KEY=polar_sk_live_...               # 결제 사용 시
 POLAR_WEBHOOK_SECRET=...                       # 결제 사용 시
@@ -93,7 +93,7 @@ POLAR_WEBHOOK_SECRET=...                       # 결제 사용 시
 ```
 VITE_SUPABASE_URL=https://xxxxx.supabase.co
 VITE_SUPABASE_ANON_KEY=eyJ...                 # anon 키 (service 키 아님!)
-VITE_API_URL=https://blockquest-api.up.railway.app/api
+VITE_API_URL=https://blockgame-api.onrender.com/api
 ```
 
 5. 배포 후 도메인을 백엔드 `FRONTEND_URL`과 Supabase Redirect URLs에 반영
