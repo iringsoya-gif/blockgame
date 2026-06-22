@@ -114,7 +114,7 @@ export default function StorySelect() {
                       )}
                       {locked && (
                         <span className="font-mono text-2xs px-2 py-0.5 rounded-full border"
-                          style={{ color: '#ffd700', borderColor: '#ffd70044', backgroundColor: '#ffd70011' }}>
+                          style={{ color: '#ffd23f', borderColor: '#ffd23f44', backgroundColor: '#ffd23f11' }}>
                           ✦ 프리미엄
                         </span>
                       )}
@@ -124,7 +124,7 @@ export default function StorySelect() {
                   {/* 제목 */}
                   <div>
                     <h2 className="font-display text-lg font-bold text-brand-text mb-0.5"
-                      style={{ color: locked ? undefined : meta.theme === '#7c5cfc' ? undefined : meta.theme }}>
+                      style={{ color: locked ? undefined : meta.theme === '#8b5cff' ? undefined : meta.theme }}>
                       {meta.title}
                     </h2>
                     <p className="font-mono text-xs" style={{ color: locked ? '#555577' : meta.theme }}>

@@ -31,8 +31,9 @@ function StatBar({ label, value, max = 5, color }) {
       <span className="text-brand-muted font-mono text-2xs w-14 shrink-0">{label}</span>
       <div className="flex gap-0.5 flex-1">
         {Array.from({ length: max }).map((_, i) => (
-          <div key={i} className="h-1.5 flex-1 rounded-full transition-all duration-300"
-            style={{ backgroundColor: i < value ? color : '#1e1e4a' }} />
+          <div key={i}
+            className={`h-1.5 flex-1 rounded-full transition-all duration-300 ${i < value ? '' : 'bg-brand-border'}`}
+            style={i < value ? { backgroundColor: color } : undefined} />
         ))}
       </div>
     </div>
