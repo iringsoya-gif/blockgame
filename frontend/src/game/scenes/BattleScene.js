@@ -763,6 +763,50 @@ export class BattleScene extends Phaser.Scene {
     else if (this.skillManager.skillBlocked) sound.skillBlocked()
   }
 
+  // 스킬 시각/사운드 피드백 (SkillManager.onSkillEffect 콜백)
+  _onSkillEffect(type, skill) {
+    switch (type) {
+      case 'used':
+        if (skill?.name) this._showLabel(skill.name, 0x44ff99, 1000, 2)
+        break
+      case 'gauge_full':
+        this._showLabel('SKILL READY', 0xffd700, 900, 2)
+        break
+      case 'shield_on':
+        this._showLabel('SHIELD', 0x44aaff, 900, 2)
+        break
+      case 'shield_absorb':
+        this._showLabel('흡수!', 0x44aaff, 800, 2)
+        this._flashBoard(true)
+        break
+      case 'blocked':
+      case 'skills_blocked':
+        this._showLabel('스킬 봉인', 0xff2244, 1000, 2)
+        sound.skillBlocked()
+        break
+      case 'on_cooldown':
+        this._showLabel('쿨다운', 0xff8800, 700, 1)
+        sound.skillBlocked()
+        break
+      case 'no_gauge':
+        this._showLabel('게이지 부족', 0xff8800, 700, 1)
+        sound.skillBlocked()
+        break
+      default:
+        break
+    }
+  }
+
+  // 적 스킬 사용 알림 (SkillManager.onEnemySkill 콜백)
+  _onEnemySkill(id, meta) {
+    const name  = meta?.name  ?? '적 스킬'
+    const icon  = meta?.icon  ?? '⚠'
+    const color = meta?.color ?? 0xff4466
+    this._showLabel(`${icon} ${name}`, color, 1200, 3)
+    this._flashBoard(true)
+    sound.garbageReceive()
+  }
+
   _applyEffect(caster, skillId) {
     const isPlayer  = caster === 'player'
     const selfBoard = isPlayer ? this.playerBoard : this.enemyBoard
