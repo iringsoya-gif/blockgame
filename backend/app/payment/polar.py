@@ -5,10 +5,15 @@ from app.core.supabase import supabase
 
 
 class PolarProvider(PaymentProvider):
-    BASE_URL = "https://api.polar.sh"
+    PRODUCTION_URL = "https://api.polar.sh"
+    SANDBOX_URL    = "https://sandbox-api.polar.sh"
 
     def __init__(self):
         self.api_key = settings.polar_api_key
+        self.BASE_URL = (
+            self.SANDBOX_URL if settings.polar_server.lower() == "sandbox"
+            else self.PRODUCTION_URL
+        )
         self.headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",

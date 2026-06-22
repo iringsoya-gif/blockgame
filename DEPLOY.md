@@ -75,8 +75,10 @@ GROQ_API_KEY=gsk_...                          # AI 최소 1개 필수
 GEMINI_API_KEY=AIza...                        # 폴백 권장
 FRONTEND_URL=https://blockgame-beta.vercel.app    # 필수 (CORS)
 DEBUG=False                                    # 프로덕션은 False
-POLAR_API_KEY=polar_sk_live_...               # 결제 사용 시
-POLAR_WEBHOOK_SECRET=...                       # 결제 사용 시
+POLAR_API_KEY=polar_oat_...                   # 결제 사용 시 (Organization Access Token)
+POLAR_WEBHOOK_SECRET=...                       # 결제 사용 시 (웹훅 서명 검증)
+POLAR_PREMIUM_PRICE_ID=...                     # 결제 사용 시 (Polar 상품의 price ID — 서버가 가격 결정)
+POLAR_SERVER=production                         # production 또는 sandbox(테스트)
 ```
 
 > 배포 전 검증: `python scripts/check_env.py`

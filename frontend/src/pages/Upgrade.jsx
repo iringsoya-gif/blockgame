@@ -11,7 +11,8 @@ async function getSubscriptionStatus() {
   return api.paymentStatus()
 }
 async function createCheckout() {
-  return api.createCheckout('blockquest-premium-lifetime')
+  // plan_id는 논리적 식별자일 뿐 — 실제 가격/상품은 서버의 POLAR_PREMIUM_PRICE_ID로 결정됨
+  return api.createCheckout('premium')
 }
 
 function FeatureRow({ label, free, premium, highlight }) {
