@@ -14,22 +14,40 @@ export const PIECES = {
 }
 export const PIECE_KEYS = Object.keys(PIECES)
 
-// SRS Wall Kick 데이터 (표준 회전 시스템)
-const WALL_KICKS = {
-  // J,L,S,T,Z
-  normal: [
-    [[0,0],[-1,0],[-1,1],[0,-2],[-1,-2]],  // 0→1
-    [[0,0],[1,0],[1,-1],[0,2],[1,2]],        // 1→2
-    [[0,0],[1,0],[1,1],[0,-2],[1,-2]],       // 2→3
-    [[0,0],[-1,0],[-1,-1],[0,2],[-1,2]],    // 3→0
-  ],
-  // I 피스
-  I: [
-    [[0,0],[-2,0],[1,0],[-2,-1],[1,2]],
-    [[0,0],[-1,0],[2,0],[-1,2],[2,-1]],
-    [[0,0],[2,0],[-1,0],[2,1],[-1,-2]],
-    [[0,0],[1,0],[-2,0],[1,-2],[-2,1]],
-  ],
+// SRS Wall Kick — from→to 전이 테이블 (testris rotation.ts 이식)
+// [dx, dy] 적용 관례: nx = ox + dx, ny = oy - dy  (dy>0 = 위로)
+const KICKS_JLSTZ = {
+  '0>1': [[0,0],[-1,0],[-1,1],[0,-2],[-1,-2]],
+  '1>0': [[0,0],[1,0],[1,-1],[0,2],[1,2]],
+  '1>2': [[0,0],[1,0],[1,-1],[0,2],[1,2]],
+  '2>1': [[0,0],[-1,0],[-1,1],[0,-2],[-1,-2]],
+  '2>3': [[0,0],[1,0],[1,1],[0,-2],[1,-2]],
+  '3>2': [[0,0],[-1,0],[-1,-1],[0,2],[-1,2]],
+  '3>0': [[0,0],[-1,0],[-1,-1],[0,2],[-1,2]],
+  '0>3': [[0,0],[1,0],[1,1],[0,-2],[1,-2]],
+  '0>2': [[0,0],[0,1],[1,1],[-1,1],[1,0],[-1,0]],
+  '1>3': [[0,0],[1,0],[1,2],[1,-1],[0,2],[0,-1]],
+  '2>0': [[0,0],[0,-1],[-1,-1],[1,-1],[-1,0],[1,0]],
+  '3>1': [[0,0],[-1,0],[-1,2],[-1,-1],[0,2],[0,-1]],
+}
+const KICKS_I = {
+  '0>1': [[0,0],[-2,0],[1,0],[-2,-1],[1,2]],
+  '1>0': [[0,0],[2,0],[-1,0],[2,1],[-1,-2]],
+  '1>2': [[0,0],[-1,0],[2,0],[-1,2],[2,-1]],
+  '2>1': [[0,0],[1,0],[-2,0],[1,-2],[-2,1]],
+  '2>3': [[0,0],[2,0],[-1,0],[2,1],[-1,-2]],
+  '3>2': [[0,0],[-2,0],[1,0],[-2,-1],[1,2]],
+  '3>0': [[0,0],[1,0],[-2,0],[1,-2],[-2,1]],
+  '0>3': [[0,0],[-1,0],[2,0],[-1,2],[2,-1]],
+  '0>2': [[0,0],[0,1],[1,1],[-1,1],[1,0],[-1,0]],
+  '1>3': [[0,0],[1,0],[1,2],[1,-1],[0,2],[0,-1]],
+  '2>0': [[0,0],[0,-1],[-1,-1],[1,-1],[-1,0],[1,0]],
+  '3>1': [[0,0],[-1,0],[-1,2],[-1,-1],[0,2],[0,-1]],
+}
+function getKicks(name, from, to) {
+  if (name === 'O') return [[0,0]]
+  const key = `${from}>${to}`
+  return name === 'I' ? (KICKS_I[key] ?? [[0,0]]) : (KICKS_JLSTZ[key] ?? [[0,0]])
 }
 
 export class Board {
@@ -70,31 +88,23 @@ export class Board {
       }
   }
 
-  // SRS 회전 — 킥 포함, T-spin 감지 반환
+  // SRS 회전 — from→to 킥, rotDir: 1(CW) | -1(CCW) | 2(180°)
   tryRotate(piece, ox, oy, rotDir = 1) {
-    const isI   = piece.name === 'I'
-    const kicks = isI ? WALL_KICKS.I : WALL_KICKS.normal
-    const rotIdx = (piece._rotIdx ?? 0)
-    const newRotIdx = (rotIdx + rotDir + 4) % 4
+    const rotIdx = piece._rotIdx ?? 0
+    const step = rotDir === 2 ? 2 : rotDir
+    const newRotIdx = (rotIdx + step + 4) % 4
 
-    const newShape = rotDir === 1
-      ? piece.shape[0].map((_, i) => piece.shape.map(r => r[i]).reverse())
-      : piece.shape[0].map((_, i) => piece.shape.map(r => r[piece.shape[0].length - 1 - i]))
-
-    // SRS 월킥: CW는 현재 상태 인덱스, CCW는 목표 상태 인덱스의 킥을 반대로 적용
-    let kickTable
-    if (rotDir === 1) {
-      kickTable = kicks[rotIdx]
-    } else {
-      // CCW: 목표→현재가 CW이므로, 목표 상태(newRotIdx)의 킥을 부호 반전
-      kickTable = kicks[newRotIdx].map(([dx, dy]) => [-dx, -dy])
+    let newShape = piece.shape
+    const turns = ((step % 4) + 4) % 4
+    for (let t = 0; t < turns; t++) {
+      newShape = newShape[0].map((_, i) => newShape.map(r => r[i]).reverse())
     }
 
-    for (const [dx, dy] of kickTable) {
+    const kicks = getKicks(piece.name, rotIdx, newRotIdx)
+    for (const [dx, dy] of kicks) {
       const nx = ox + dx, ny = oy - dy
       const rotatedPiece = { ...piece, shape: newShape, _rotIdx: newRotIdx }
       if (this.isValid(rotatedPiece, nx, ny)) {
-        // T-spin 감지
         const isTSpin = piece.name === 'T' && this._checkTSpin(rotatedPiece, nx, ny)
         return { piece: rotatedPiece, x: nx, y: ny, isTSpin }
       }
