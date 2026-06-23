@@ -91,17 +91,27 @@ async def handle_webhook(request: Request):
 
     try:
         import json
+        from datetime import datetime, timezone
         payload = json.loads(body_bytes)
         info    = await provider.verify_webhook(payload)
-        if info.get("user_id"):
+        uid = info.get("user_id")
+        if uid:
             # 구독 상태 갱신 (취소/만료 시 status=canceled로 프리미엄 회수)
-            supabase.table("subscriptions").upsert({
-                "user_id":               info["user_id"],
+            # user_id에 unique 제약이 없어 on_conflict 대신 select→update/insert 사용
+            row = {
+                "user_id":               uid,
                 "polar_subscription_id": info.get("subscription_id"),
                 "status":                info.get("status", "active"),
-                "updated_at":            "now()",
-            }, on_conflict="user_id").execute()
-            logger.info(f"Subscription updated: user={info['user_id']} status={info.get('status')} event={info.get('event_type')}")
+                "updated_at":            datetime.now(timezone.utc).isoformat(),
+            }
+            existing = supabase.table("subscriptions").select("id").eq("user_id", uid).limit(1).execute()
+            if existing.data:
+                supabase.table("subscriptions").update(row).eq("user_id", uid).execute()
+            else:
+                supabase.table("subscriptions").insert(row).execute()
+            logger.info(f"Subscription updated: user={uid} status={info.get('status')} event={info.get('event_type')}")
+        else:
+            logger.warning(f"Webhook missing user_id metadata: event={info.get('event_type')}")
     except Exception as e:
         logger.warning(f"Webhook processing error: {e}")
         # 웹훅은 항상 200 반환 (결제사 재시도 폭주 방지)
