@@ -1,3 +1,4 @@
+import base64
 import hashlib
 import hmac
 import logging
@@ -13,6 +14,40 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/payment", tags=["payment"])
 provider = PolarProvider()
+
+
+def verify_polar_signature(secret: str, body: bytes, headers) -> bool:
+    """Polar(Standard Webhooks) 서명 검증.
+
+    서명 대상 = "{webhook-id}.{webhook-timestamp}.{body}", HMAC-SHA256 → base64.
+    헤더 webhook-signature 는 "v1,<base64> v1,<base64> ..." 형태(여러 개 가능).
+    Polar secret 의 인코딩(raw vs base64)이 환경마다 달라 두 방식 모두 시도한다.
+    """
+    wh_id = headers.get("webhook-id", "")
+    wh_ts = headers.get("webhook-timestamp", "")
+    wh_sig = headers.get("webhook-signature", "")
+    if not (wh_id and wh_ts and wh_sig):
+        return False
+
+    signed = f"{wh_id}.{wh_ts}.".encode() + body
+
+    # 가능한 HMAC 키 후보: (1) raw secret 바이트, (2) base64 디코딩(whsec_ 접두 제거)
+    keys = [secret.encode()]
+    s = secret[len("whsec_"):] if secret.startswith("whsec_") else secret
+    try:
+        keys.append(base64.b64decode(s))
+    except Exception:
+        pass
+
+    # 헤더에서 실제 서명 값만 추출 ("v1,<sig>" → "<sig>")
+    provided = [p.split(",", 1)[1] if "," in p else p for p in wh_sig.split()]
+
+    for key in keys:
+        expected = base64.b64encode(hmac.new(key, signed, hashlib.sha256).digest()).decode()
+        for sig in provided:
+            if hmac.compare_digest(sig, expected):
+                return True
+    return False
 
 
 class CheckoutRequest(BaseModel):
@@ -50,11 +85,8 @@ async def handle_webhook(request: Request):
 
     body_bytes = await request.body()
 
-    # 서명 검증
-    signature = request.headers.get("webhook-signature", "")
-    secret    = settings.polar_webhook_secret.encode()
-    expected  = hmac.new(secret, body_bytes, hashlib.sha256).hexdigest()
-    if not hmac.compare_digest(f"sha256={expected}", signature):
+    # 서명 검증 (Polar = Standard Webhooks 규격)
+    if not verify_polar_signature(settings.polar_webhook_secret, body_bytes, request.headers):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid signature")
 
     try:
