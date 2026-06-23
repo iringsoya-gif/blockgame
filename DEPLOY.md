@@ -77,7 +77,7 @@ FRONTEND_URL=https://blockgame-beta.vercel.app    # 필수 (CORS)
 DEBUG=False                                    # 프로덕션은 False
 POLAR_API_KEY=polar_oat_...                   # 결제 사용 시 (Organization Access Token)
 POLAR_WEBHOOK_SECRET=...                       # 결제 사용 시 (웹훅 서명 검증)
-POLAR_PREMIUM_PRICE_ID=...                     # 결제 사용 시 (Polar 상품의 price ID — 서버가 가격 결정)
+POLAR_PREMIUM_PRODUCT_ID=...                   # 결제 사용 시 (Polar 상품의 Product ID — 서버가 상품 결정)
 POLAR_SERVER=production                         # production 또는 sandbox(테스트)
 ```
 

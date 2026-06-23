@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     # 결제 (선택)
     polar_api_key:         str = ""
     polar_webhook_secret:  str = ""
-    polar_premium_price_id: str = ""          # Polar 대시보드의 프리미엄 상품 price ID (서버에서만 가격 결정)
+    polar_premium_product_id: str = ""         # Polar 대시보드의 프리미엄 상품 Product ID (서버에서만 상품 결정)
     polar_server:          str = "production"  # "production" 또는 "sandbox" (테스트용)
     lemonsqueezy_api_key:  str = ""   # 대안 결제
     lemonsqueezy_webhook_secret: str = ""

@@ -26,13 +26,13 @@ async def create_checkout(
     user=Depends(get_current_user),
 ):
     payment_limiter(request)
-    # 결제 미설정 시 503 (API 키 + 프리미엄 price ID 둘 다 필요)
-    if not settings.polar_api_key or not settings.polar_premium_price_id:
+    # 결제 미설정 시 503 (API 키 + 프리미엄 product ID 둘 다 필요)
+    if not settings.polar_api_key or not settings.polar_premium_product_id:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                             detail="결제 시스템이 설정되지 않았습니다.")
-    # 가격은 서버에서만 결정 — 클라이언트가 보낸 plan_id로 price를 정하지 않는다(보안)
+    # 상품은 서버에서만 결정 — 클라이언트가 보낸 plan_id로 상품을 정하지 않는다(보안)
     try:
-        url = await provider.create_checkout(user.id, settings.polar_premium_price_id)
+        url = await provider.create_checkout(user.id, settings.polar_premium_product_id)
         return {"checkout_url": url}
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
